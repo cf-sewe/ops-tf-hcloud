@@ -1,6 +1,26 @@
 ##
 # Jump Server / Ansible Server
 
+data "template_file" "script" {
+  template = file("${path.module}/cloud-init/user-data-jump.yml.tpl")
+  vars = {
+    ansible_public_key = tls_private_key.ansible_ssh_key.public_key_openssh
+  }
+}
+data "template_cloudinit_config" "config" {
+  gzip          = true
+  base64_encode = true
+  part {
+    filename     = "init.cfg"
+    content_type = "text/cloud-config"
+    content      = data.template_file.script.rendered
+  }
+  # part {
+  #   content_type = "text/x-shellscript"
+  #   content      = "baz"
+  # }
+}
+
 # All traffic toward internet is permitted.
 resource "hcloud_firewall" "jump-server" {
   name = "jump-server"
@@ -33,7 +53,7 @@ resource "hcloud_server" "jump" {
   image             = "rocky-8"
   location          = var.hcloud_datacenter
   server_type       = "cx11"
-  user_data         = file("cloud-init/user-data-jump.yml")
+  user_data         = data.template_cloudinit_config.config.rendered
   firewall_ids      = [hcloud_firewall.jump-server.id]
   network {
     network_id = hcloud_network.network.id
