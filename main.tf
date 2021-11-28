@@ -13,11 +13,11 @@ resource "tls_private_key" "ansible_ssh_key" {
   rsa_bits  = 3072
 }
 
-# SSH public key for ansible
-resource "hcloud_ssh_key" "sewe" {
-  name       = "sewe"
-  public_key = file("~/.ssh/id_rsa.pub")
-}
+# # SSH public key for ansible
+# resource "hcloud_ssh_key" "sewe" {
+#   name       = "sewe"
+#   public_key = ""
+# }
 
 # Private network for internal communication
 resource "hcloud_network" "network" {

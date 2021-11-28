@@ -33,9 +33,8 @@ resource "hcloud_server" "jump" {
   image             = "rocky-8"
   location          = var.hcloud_datacenter
   server_type       = "cx11"
-  user_data         = file("user-data.yml")
+  user_data         = file("cloud-init/user-data-jump.yml")
   firewall_ids      = [hcloud_firewall.jump.id]
-  ssh_keys          = [hcloud_ssh_key.sewe.id]
   network {
     network_id = hcloud_network.network.id
     ip         = "10.77.1.2"
