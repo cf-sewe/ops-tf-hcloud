@@ -34,7 +34,7 @@ resource "hcloud_server" "jump" {
   location          = var.hcloud_datacenter
   server_type       = "cx11"
   user_data         = file("cloud-init/user-data-jump.yml")
-  firewall_ids      = [hcloud_firewall.jump.id]
+  firewall_ids      = [hcloud_firewall.jump-server.id]
   network {
     network_id = hcloud_network.network.id
     ip         = "10.77.1.2"
