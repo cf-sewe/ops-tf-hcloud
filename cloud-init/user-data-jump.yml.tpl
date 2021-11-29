@@ -15,7 +15,6 @@ write_files:
     path: /home/ansible/.ssh/id_rsa
     permissions: '0400'
 packages:
-  - pwgen
   - git-core
   - centos-release-ansible-29
 bootcmd:
