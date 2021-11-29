@@ -54,7 +54,7 @@ resource "hcloud_server" "jump" {
   delete_protection = false
   image             = "rocky-8"
   location          = var.hcloud_datacenter
-  server_type       = "cx11"
+  server_type       = "cpx11"
   user_data         = data.template_cloudinit_config.jump-server.rendered
   ssh_keys          = [hcloud_ssh_key.bootstrap.id]
   firewall_ids      = [hcloud_firewall.jump-server.id]
