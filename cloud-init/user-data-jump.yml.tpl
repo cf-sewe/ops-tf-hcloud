@@ -10,11 +10,15 @@ users:
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     groups: sudo
 write_files:
-- encoding: base64
-  content: "${ansible_private_key}"
-  owner: 'ansible:ansible'
-  path: /home/ansible/.ssh/id_rsa
-  permissions: '0400'
-  defer: true
+  - encoding: base64
+    content: "${ansible_private_key}"
+    path: /home/ansible/.ssh/id_rsa
+    permissions: '0400'
+packages:
+  - pwgen
+  - git-core
+  - centos-release-ansible-29
 bootcmd:
-  - sed -i '/10\.0\.2\.3/d' /etc/resolv.conf
+  - [ sed, -i, '/10\.0\.2\.3/d', "/etc/resolv.conf" ]
+runcmd:
+  - [ chown, -R, "ansible:ansible", "/home/ansible" ]
