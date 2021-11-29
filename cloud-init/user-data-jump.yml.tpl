@@ -8,6 +8,12 @@ users:
     shell: "/bin/bash"
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     groups: sudo
+write_files:
+- encoding: b64
+  content: "${ansible_private_key}"
+  owner: ansible:ansible
+  path: /home/ansible/.ssh/id_rsa
+  permissions: '0400'
 runcmd:
   - updatedb
-  - sed '/10\.\0\.2\.3/d' /etc/resolv.conf
+  - sed -i '/10\.0\.2\.3/d' /etc/resolv.conf

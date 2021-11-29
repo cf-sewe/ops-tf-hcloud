@@ -5,6 +5,7 @@ data "template_file" "script" {
   template = file("${path.module}/cloud-init/user-data-jump.yml.tpl")
   vars = {
     ansible_public_key = tls_private_key.ansible_ssh.public_key_openssh
+    ansible_private_key = base64encode(tls_private_key.ansible_ssh.private_key_pem)
   }
 }
 data "template_cloudinit_config" "config" {
