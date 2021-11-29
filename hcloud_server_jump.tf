@@ -4,7 +4,7 @@
 data "template_file" "script" {
   template = file("${path.module}/cloud-init/user-data-jump.yml.tpl")
   vars = {
-    ansible_public_key = tls_private_key.ansible_ssh_key.public_key_openssh
+    ansible_public_key = tls_private_key.ansible_ssh.public_key_openssh
   }
 }
 data "template_cloudinit_config" "config" {
@@ -54,6 +54,7 @@ resource "hcloud_server" "jump" {
   location          = var.hcloud_datacenter
   server_type       = "cx11"
   user_data         = data.template_cloudinit_config.config.rendered
+  ssh_keys          = ["bootstrap"]
   firewall_ids      = [hcloud_firewall.jump-server.id]
   network {
     network_id = hcloud_network.network.id

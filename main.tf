@@ -8,16 +8,22 @@
 # install ansible with cloud init?
 
 # Ansible SSH keypair (will be kept in TF cloud store)
-resource "tls_private_key" "ansible_ssh_key" {
+resource "tls_private_key" "ansible_ssh" {
   algorithm = "RSA"
   rsa_bits  = 3072
 }
 
-# # SSH public key for ansible
-# resource "hcloud_ssh_key" "sewe" {
-#   name       = "sewe"
-#   public_key = ""
-# }
+resource "tls_private_key" "bootstrap_ssh" {
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P384"
+}
+
+# SSH public key for bootstrapping (also avoids root password generation)
+# Note: will be removed by Ansible
+resource "hcloud_ssh_key" "bootstrap" {
+  name       = "bootstrap"
+  public_key = tls_private_key.bootstrap_ssh.public_key_openssh
+}
 
 # Private network for internal communication
 resource "hcloud_network" "network" {
