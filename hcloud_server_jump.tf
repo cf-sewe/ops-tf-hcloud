@@ -16,10 +16,10 @@ data "template_cloudinit_config" "config" {
     content_type = "text/cloud-config"
     content      = data.template_file.script.rendered
   }
-  # part {
-  #   content_type = "text/x-shellscript"
-  #   content      = "baz"
-  # }
+  part {
+    content_type = "text/x-shellscript"
+    content      = file("${path.module}/cloud-init/install-ansible.sh")
+  }
 }
 
 # All traffic toward internet is permitted.
