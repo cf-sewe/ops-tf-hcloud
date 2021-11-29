@@ -54,7 +54,7 @@ resource "hcloud_server" "jump" {
   location          = var.hcloud_datacenter
   server_type       = "cx11"
   user_data         = data.template_cloudinit_config.config.rendered
-  ssh_keys          = ["bootstrap"]
+  ssh_keys          = [hcloud_ssh_key.bootstrap.id]
   firewall_ids      = [hcloud_firewall.jump-server.id]
   network {
     network_id = hcloud_network.network.id
