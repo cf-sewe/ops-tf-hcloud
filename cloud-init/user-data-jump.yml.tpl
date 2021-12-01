@@ -8,7 +8,6 @@ users:
       - "${ansible_public_key} Ansible"
     shell: "/bin/bash"
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-    groups: sudo
 write_files:
   - encoding: base64
     content: "${ansible_private_key}"

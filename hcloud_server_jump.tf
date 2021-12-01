@@ -47,7 +47,6 @@ resource "hcloud_firewall" "jump-server" {
   }
 }
 
-# TODO: remove temporary allow root access via personal ssh key
 resource "hcloud_server" "jump" {
   name              = "jump"
   backups           = false
