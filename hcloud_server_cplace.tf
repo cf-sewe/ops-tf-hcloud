@@ -101,12 +101,12 @@ resource "hcloud_server" "cplace_site1" {
 
 # only used when active_passive mode is enabled
 resource "hcloud_server" "cplace_site2" {
-  count              = cplace_enable_active_passive ? var.cplace_node_count : 0
+  count              = var.cplace_enable_active_passive ? var.cplace_node_count : 0
   name               = "cplace-s2n${count.index + 1}"
   backups            = false
   delete_protection  = false
   image              = "rocky-8"
-  location           = var.hcloud_alt_datacenter
+  location           = var.hcloud_datacenter_alt
   server_type        = var.cplace_server_type
   user_data          = data.template_cloudinit_config.cplace.rendered
   ssh_keys           = [hcloud_ssh_key.bootstrap.id]
@@ -125,7 +125,7 @@ resource "hcloud_server" "cplace_site2" {
 # It will be assigned by default to the site1
 # TODO: in cplace HA mode, loadbalancer must be used instead
 resource "hcloud_floating_ip" "cplace_primary_ipv4" {
-  count         = cplace_enable_active_passive ? 1 : 0
+  count         = var.cplace_enable_active_passive ? 1 : 0
   name = "cplace-primary-ipv6"
   description   = "Primary IPv4 address of the cplace service"
   type          = "ipv4"
@@ -134,7 +134,7 @@ resource "hcloud_floating_ip" "cplace_primary_ipv4" {
 }
 
 resource "hcloud_floating_ip" "cplace_primary_ipv6" {
-  count         = cplace_enable_active_passive ? 1 : 0
+  count         = var.cplace_enable_active_passive ? 1 : 0
   name = "cplace-primary-ipv6"
   description   = "Primary IPv6 address of the cplace service"
   type          = "ipv6"
