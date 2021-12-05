@@ -8,8 +8,6 @@ users:
       - "${ansible_public_key} Ansible"
     shell: "/bin/bash"
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-packages:
-  - git-core
 bootcmd:
   - [ sed, -i, '/10\.0\.2\.3/d', "/etc/resolv.conf" ]
 runcmd:
