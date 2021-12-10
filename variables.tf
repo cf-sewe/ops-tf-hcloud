@@ -48,7 +48,7 @@ variable "azurerm_network_security_rule_priority" {
   description = "Defines the priority of the network security rule. Must be unique."
 }
 variable "azurerm_subscription_id" {
-  default     = "97c563b8-5a8c-49ef-a21a-7c0b75bac09a"
+  default     = "d14b4a4a-7209-43f1-9f74-0e805195fb09"
   description = "Azure Subscription Id"
 }
 variable "azurerm_tenant_id" {
