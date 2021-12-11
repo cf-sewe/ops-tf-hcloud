@@ -24,7 +24,7 @@ resource "azurerm_network_security_rule" "hcloud_ldaps" {
   source_address_prefixes = [
     hcloud_server.jump.ipv4_address,
     hcloud_server.fwd.ipv4_address,
-    hcloud_server.cplace-site1[*].ipv4_address
+    hcloud_server.cplace_site1[*].ipv4_address
   ]
   destination_address_prefix  = "*"
   resource_group_name         = data.azurerm_resource_group.azuread.name
