@@ -12,7 +12,7 @@ data "azurerm_network_security_group" "adds" {
   resource_group_name = data.azurerm_resource_group.azuread.name
 }
 
-resource "azurerm_network_security_rule" "example" {
+resource "azurerm_network_security_rule" "hcloud_ldaps" {
   name                        = "hcloud-ldaps-${var.hcloud_environment}"
   description                 = "Allow LDAPS connection from Hetzner Cloud servers (${var.hcloud_environment})"
   priority                    = var.azurerm_network_security_rule_priority
@@ -21,7 +21,7 @@ resource "azurerm_network_security_rule" "example" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "636"
-  source_address_prefix       = "*"
+  source_address_prefixes     = hcloud_server.*.ipv4_address
   destination_address_prefix  = "*"
   resource_group_name         = data.azurerm_resource_group.azuread.name
   network_security_group_name = data.azurerm_network_security_group.adds.name
