@@ -126,7 +126,7 @@ resource "hcloud_server" "cplace_site2" {
 # TODO: in cplace HA mode, loadbalancer must be used instead
 resource "hcloud_floating_ip" "cplace_primary_ipv4" {
   count         = var.cplace_enable_active_passive ? 1 : 0
-  name = "cplace-primary-ipv6"
+  name          = "cplace-primary-ipv6"
   description   = "Primary IPv4 address of the cplace service"
   type          = "ipv4"
   home_location = var.hcloud_datacenter
@@ -135,7 +135,7 @@ resource "hcloud_floating_ip" "cplace_primary_ipv4" {
 
 resource "hcloud_floating_ip" "cplace_primary_ipv6" {
   count         = var.cplace_enable_active_passive ? 1 : 0
-  name = "cplace-primary-ipv6"
+  name          = "cplace-primary-ipv6"
   description   = "Primary IPv6 address of the cplace service"
   type          = "ipv6"
   home_location = var.hcloud_datacenter
