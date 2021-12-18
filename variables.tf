@@ -32,6 +32,11 @@ variable "cplace_server_type" {
   description = "Defines the cplace server type."
 }
 
+variable "ldaps_ipv4_address" {
+  default     = "51.144.58.61/32"
+  description = "IP address of the LDAP server used for central authentication (ldaps.collaboration-factory.de)."
+}
+
 # Azure credentials for ADDS firewall
 # see https://docs.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure
 # /subscriptions/97c563b8-5a8c-49ef-a21a-7c0b75bac09a/resourceGroups/rg-azuread/providers/Microsoft.Network/networkSecurityGroups/aadds-nsg

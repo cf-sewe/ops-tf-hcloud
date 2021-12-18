@@ -6,6 +6,13 @@
 # AP=on,count=1, 2 servers (1x active, 1x passive)
 # AP=on,count=2, 4 servers (2x active, 2x passive)
 
+# TODO: change to support multiple cplace servers per environment, defined via config
+#  this can then be used for our internal prod/test environments.
+# - TF config defines which/how many servers should be deployed
+#   name
+#   description
+#   hcloud server_type
+
 data "template_file" "user-data-cplace" {
   template = file("${path.module}/cloud-init/user-data-cplace.yml.tpl")
   vars = {
@@ -68,6 +75,13 @@ resource "hcloud_firewall" "block-internet" {
       "::/0"
     ]
     description = "Allow NTP"
+  }
+  rule {
+    direction       = "out"
+    protocol        = "tcp"
+    port            = 636
+    destination_ips = [var.ldaps_ipv4_address]
+    description     = "Allow LDAPS"
   }
 }
 
