@@ -7,12 +7,13 @@
 # firewall
 # install ansible with cloud init?
 
-# Ansible SSH keypair (will be kept in TF cloud store)
+# Ansible SSH keypair
 resource "tls_private_key" "ansible_ssh" {
   algorithm = "RSA"
   rsa_bits  = 3072
 }
 
+# Temporary ssh key valid during bootstrapping
 resource "tls_private_key" "bootstrap_ssh" {
   algorithm   = "ECDSA"
   ecdsa_curve = "P384"

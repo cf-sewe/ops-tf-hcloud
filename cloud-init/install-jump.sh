@@ -1,13 +1,12 @@
 #!/bin/bash
 set -e
 
-echo "Installing Ansible"
-dnf -qy install ansible
-
+echo "Installing Packages"
+dnf -qy install ansible python3-dns
 
 echo "Checkout ops-ansible GIT repository"
 chown -R ansible:ansible /home/ansible
-sudo -nu ansible cat > /home/ansible/.ssh/known_hosts << EOT
+sudo -nu ansible tee /home/ansible/.ssh/known_hosts << EOT
 # github.com:22 SSH-2.0-babeld-8eb00d7e
 github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
 # github.com:22 SSH-2.0-babeld-8eb00d7e

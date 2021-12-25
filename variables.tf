@@ -3,35 +3,6 @@ variable "hcloud_token" {
   description = "Hetzner Cloud API Token"
 }
 
-variable "hcloud_environment" {
-  description = "Name of the Hetzner Cloud Project (environment). Must be unique within Hetzner Cloud."
-}
-
-variable "hcloud_datacenter" {
-  default     = "fsn1"
-  description = "Hetzner Cloud location. You can list locations with 'hcloud location list'"
-}
-
-variable "hcloud_datacenter_alt" {
-  default     = "nbg1"
-  description = "Alternative hcloud location for active-passive second site."
-}
-
-variable "cplace_node_count" {
-  default     = "1"
-  description = "Specifies the number of cplace Nodes for HA"
-}
-
-variable "cplace_enable_active_passive" {
-  default     = false
-  description = "Whether to enable active-passive mode"
-}
-
-variable "cplace_server_type" {
-  default     = "cpx21"
-  description = "Defines the cplace server type."
-}
-
 variable "ldaps_ipv4_address" {
   default     = "51.144.58.61/32"
   description = "IP address of the LDAP server used for central authentication (ldaps.collaboration-factory.de)."
@@ -67,4 +38,35 @@ variable "azurerm_client_id" {
 variable "azurerm_client_secret" {
   sensitive   = true
   description = "Azure Client Secret (password)"
+}
+
+# http://vcloud-lab.com/entries/microsoft-azure/terraform-for-each-loop-on-map-example
+variable "cplace_servers" {
+  description = "hcloud servers for cplace, database, elasticsearch"
+  type = map(object({
+    name        = string
+    ip          = string
+    location    = string
+    server_type = string
+  }))
+  default = {
+    "1" = {
+      name        = "cplace"
+      ip          = "10.77.1.10"
+      location    = "fsn1"
+      server_type = "cpx21"
+    }
+    "2" = {
+      name        = "db"
+      ip          = "10.77.1.20"
+      location    = "fsn1"
+      server_type = "cpx21"
+    }
+    "3" = {
+      name        = "es"
+      ip          = "10.77.30"
+      location    = "fsn1"
+      server_type = "cpx21"
+    }
+  }
 }
