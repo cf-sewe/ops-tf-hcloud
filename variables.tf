@@ -1,3 +1,7 @@
+variable "hcloud_environment" {
+  description = "Name of the Hetzner Cloud Project (environment). Must be unique within Hetzner Cloud."
+}
+
 variable "hcloud_token" {
   sensitive   = true
   description = "Hetzner Cloud API Token"
