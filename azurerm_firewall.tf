@@ -26,7 +26,7 @@ resource "azurerm_network_security_rule" "hcloud_ldaps" {
       hcloud_server.jump.ipv4_address,
       hcloud_server.fwd.ipv4_address
     ],
-    hcloud_server.cplace[*].ipv4_address,
+    toset([for server in hcloud_server.cplace : server.ipv4_address])
   )
   destination_address_prefix  = "*"
   resource_group_name         = data.azurerm_resource_group.azuread.name
