@@ -1,10 +1,15 @@
+variable "hcloud_token" {
+  sensitive   = true
+  description = "Hetzner Cloud API Token"
+}
+
 variable "hcloud_environment" {
   description = "Name of the Hetzner Cloud Project (environment). Must be unique within Hetzner Cloud."
 }
 
-variable "hcloud_token" {
-  sensitive   = true
-  description = "Hetzner Cloud API Token"
+variable "hcloud_datacenter" {
+  default     = "fsn1"
+  description = "Hetzner Cloud location. You can list locations with 'hcloud location list'"
 }
 
 variable "ldaps_ipv4_address" {
