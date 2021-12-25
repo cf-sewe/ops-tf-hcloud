@@ -73,7 +73,7 @@ variable "cplace_servers" {
     }
     "3" = {
       name        = "es"
-      ip          = "10.77.30"
+      ip          = "10.77.1.30"
       location    = "fsn1"
       server_type = "cpx21"
     }
