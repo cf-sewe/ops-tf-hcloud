@@ -34,9 +34,9 @@ data "template_cloudinit_config" "cplace" {
   }
 }
 
-# General firewall blocking internet access
-resource "hcloud_firewall" "block-internet" {
-  name = "block-internet"
+# cplace firewall blocking in/out internet access, allow inbound HTTP traffic
+resource "hcloud_firewall" "cplace" {
+  name = "cplace"
   rule {
     direction = "in"
     protocol  = "icmp"
@@ -45,6 +45,26 @@ resource "hcloud_firewall" "block-internet" {
       "::/0"
     ]
     description = "Allow ICMP"
+  }
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = 80
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+    description = "Allow HTTP"
+  }
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = 443
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+    description = "Allow HTTPS"
   }
   rule {
     direction = "out"
@@ -102,7 +122,7 @@ resource "hcloud_server" "cplace_site1" {
   server_type        = var.cplace_server_type
   user_data          = data.template_cloudinit_config.cplace.rendered
   ssh_keys           = [hcloud_ssh_key.bootstrap.id]
-  firewall_ids       = [hcloud_firewall.block-internet.id]
+  firewall_ids       = [hcloud_firewall.cplace.id]
   placement_group_id = hcloud_placement_group.cplace_spread.id
   network {
     network_id = hcloud_network.network.id
@@ -124,7 +144,7 @@ resource "hcloud_server" "cplace_site2" {
   server_type        = var.cplace_server_type
   user_data          = data.template_cloudinit_config.cplace.rendered
   ssh_keys           = [hcloud_ssh_key.bootstrap.id]
-  firewall_ids       = [hcloud_firewall.block-internet.id]
+  firewall_ids       = [hcloud_firewall.cplace.id]
   placement_group_id = hcloud_placement_group.cplace_spread.id
   network {
     network_id = hcloud_network.network.id
