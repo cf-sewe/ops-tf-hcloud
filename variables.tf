@@ -14,7 +14,7 @@ variable "hcloud_datacenter" {
 
 variable "ldaps_ipv4_address" {
   default     = "51.144.58.61/32"
-  description = "IP address of the LDAP server used for central authentication (ldaps.collaboration-factory.de)."
+  description = "IP address of the LDAP server used for central authentication (ldaps.collaboration-factory.de)"
 }
 
 # Azure credentials for ADDS firewall
@@ -41,7 +41,6 @@ variable "azurerm_tenant_id" {
   description = "Azure Tenant Id (tenant)"
 }
 variable "azurerm_client_id" {
-  default     = "7a656829-e7f0-4abc-bd38-c490fdd3c94f"
   description = "Azure Client Id (appId)"
 }
 variable "azurerm_client_secret" {
