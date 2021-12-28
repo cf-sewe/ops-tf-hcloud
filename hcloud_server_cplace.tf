@@ -55,6 +55,16 @@ resource "hcloud_firewall" "cplace" {
     description = "Allow HTTPS"
   }
   rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = 9090
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+    description = "Allow Cockpit"
+  }
+  rule {
     direction = "out"
     protocol  = "tcp"
     port      = 53
