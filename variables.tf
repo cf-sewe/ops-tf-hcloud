@@ -12,6 +12,11 @@ variable "hcloud_datacenter" {
   description = "Hetzner Cloud location. You can list locations with 'hcloud location list'"
 }
 
+variable "hcloud_servertype_docker" {
+  default     = "cpx21"
+  description = "hcloud server type for Docker"
+}
+
 variable "ldaps_ipv4_address" {
   default     = "51.144.58.61/32"
   description = "IP address of the LDAP server used for central authentication (ldaps.collaboration-factory.de)"

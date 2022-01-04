@@ -102,16 +102,16 @@ resource "hcloud_firewall" "cplace" {
     description     = "Allow LDAPS"
   }
   rule {
-    direction       = "out"
-    protocol        = "tcp"
-    port            = 465
+    direction = "out"
+    protocol  = "tcp"
+    port      = 465
     # Note: Amazon SES supports dedicated IPs for 25$ per month.
     # Then we could restrict the destination to improve security.
     destination_ips = [
       "0.0.0.0/0",
       "::/0"
     ]
-    description     = "Allow SMTP (Amazon SES)"
+    description = "Allow SMTP (Amazon SES)"
   }
 }
 
