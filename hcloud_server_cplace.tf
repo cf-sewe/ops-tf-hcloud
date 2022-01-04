@@ -101,6 +101,18 @@ resource "hcloud_firewall" "cplace" {
     destination_ips = [var.ldaps_ipv4_address]
     description     = "Allow LDAPS"
   }
+  rule {
+    direction       = "out"
+    protocol        = "tcp"
+    port            = 465
+    # Note: Amazon SES supports dedicated IPs for 25$ per month.
+    # Then we could restrict the destination to improve security.
+    destination_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+    description     = "Allow SMTP (Amazon SES)"
+  }
 }
 
 # place cplace on different physical servers
@@ -109,7 +121,6 @@ resource "hcloud_placement_group" "cplace_spread" {
   type = "spread"
 }
 
-# primary site, always used
 resource "hcloud_server" "cplace" {
   for_each           = var.cplace_servers
   name               = each.value.name
