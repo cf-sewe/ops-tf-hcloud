@@ -24,7 +24,8 @@ resource "azurerm_network_security_rule" "hcloud_ldaps" {
   source_address_prefixes = concat(
     [
       hcloud_server.jump.ipv4_address,
-      hcloud_server.fwd.ipv4_address
+      hcloud_server.fwd.ipv4_address,
+      hcloud_server.docker.ipv4_address
     ],
     [for server in hcloud_server.cplace : server.ipv4_address]
   )
